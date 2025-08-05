@@ -6,29 +6,21 @@ import pandas as pd
 import streamlit as st
 
 # Load model
-pickle_in = open("final_obesity_model.pkl", "rb")
-classifier = pickle.load(pickle_in)
+with open("final_obesity_model.pkl", "rb") as f:
+    classifier = pickle.load(f)
 
 # Prediction function
 def predict_attack(Age, Gender, Height, Weight, BMI, PhysicalActivityLevel):
-    Age = float(Age)
-    Gender = int(Gender)
-    Height = float(Height)
-    Weight = float(Weight)
-    BMI = float(BMI)
-    PhysicalActivityLevel = int(PhysicalActivityLevel)
-
     prediction = classifier.predict([[Age, Gender, Height, Weight, BMI, PhysicalActivityLevel]])
     return int(prediction[0])
 
-# App interface
+# Streamlit App
 def main():
     st.set_page_config(page_title="Obesity Category Predictor", page_icon="🧬", layout="centered")
 
     st.markdown(
         """
         <style>
-        .main { background-color: #000000; }
         .title-box {
             background-color: #2c3e50;
             padding: 20px;
@@ -37,13 +29,9 @@ def main():
             margin-bottom: 30px;
         }
         .title-box h2 {
-            color: black;
+            color: white;
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-        }
-        .stTextInput > div > label {
-            font-weight: 600;
-            color: black;
         }
         </style>
         <div class="title-box">
@@ -53,31 +41,29 @@ def main():
         unsafe_allow_html=True
     )
 
-    st.subheader("Enter the following details:")
+    st.subheader("Enter your details:")
 
-    Age = st.text_input("Age (e.g., 25)")
-    Gender = st.text_input("Gender (0 = Male, 1 = Female)")
-    Height = st.text_input("Height in meters")
-    Weight = st.text_input("Weight in kg (e.g., 68)")
-    BMI = st.text_input("BMI (e.g., 22.5)")
-    PhysicalActivityLevel = st.text_input("Physical Activity Level (1–4)")
+    # Validated inputs
+    Age = st.number_input("Age", min_value=1, max_value=120, value=25)
+    Gender_input = st.selectbox("Gender", ("Male", "Female"))
+    Gender = 1 if Gender_input == "Male" else 0
+    Height = st.number_input("Height (in meters)", min_value=1.0, max_value=2.5, value=1.7, step=0.01)
+    Weight = st.number_input("Weight (in kg)", min_value=30.0, max_value=200.0, value=70.0, step=0.5)
+    BMI = st.number_input("BMI", min_value=10.0, max_value=50.0, value=22.5, step=0.1)
+    PhysicalActivityLevel = st.slider("Physical Activity Level", 1, 4, 2)
 
-    result = ""
     if st.button("Predict Category"):
-        try:
-            result = predict_attack(Age, Gender, Height, Weight, BMI, PhysicalActivityLevel)
-            if result == 0:
-                st.success("✅ Prediction: Normal Weight (Category 0)")
-            elif result == 1:
-                st.success("⚠️ Prediction: Obese (Category 1)")
-            elif result == 2:
-                st.success("📈 Prediction: Overweight (Category 2)")
-            elif result == 3:
-                st.success("📉 Prediction: Underweight (Category 3)")
-            else:
-                st.error("❌ Unexpected category predicted!")
-        except:
-            st.error("🚫 Invalid input. Please enter numeric values correctly.")
+        result = predict_attack(Age, Gender, Height, Weight, BMI, PhysicalActivityLevel)
+        if result == 0:
+            st.success("✅ Prediction: Normal Weight (Category 0)")
+        elif result == 1:
+            st.success("⚠️ Prediction: Obese (Category 1)")
+        elif result == 2:
+            st.success("📈 Prediction: Overweight (Category 2)")
+        elif result == 3:
+            st.success("📉 Prediction: Underweight (Category 3)")
+        else:
+            st.error("❌ Unexpected category predicted!")
 
 if __name__ == '__main__':
     main()
