@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run obesity.py
+web: sh setup.sh && python -m streamlit run obesity.py
