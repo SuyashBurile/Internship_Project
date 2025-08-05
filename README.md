@@ -1,64 +1,38 @@
-# Obesity Category Prediction App
+# Obesity Prediction App
 
-This is a **Machine Learning**-powered web application built using **Streamlit** that predicts a person's **Obesity Category** based on key physical attributes and lifestyle metrics.
-
-> **Categories Predicted:**
-> - 0: Normal weight
-> - 1: Obese
-> - 2: Overweight
-> - 3: Underweight
+This project is a **Machine Learning-based obesity prediction system** built using Python and Streamlit. It takes input features such as Age, Gender, Height, Weight, BMI, and Physical Activity Level, and predicts the **obesity category** of a person.
 
 ---
 
-## Live App Deployment
+## 📌 Features
 
- **Try the app here**: [Obesity Prediction App](https://obesity-prediction-app-b3rssec5aax3cnlrhaia9r.streamlit.app/)
-
-Deployed using **Streamlit Cloud**, with **CI/CD** enabled via Git integration — every time you push to the `main` branch, the app redeploys automatically ✅
-
----
-
-##  Features
-
--  User inputs: Age, Gender, Height, Weight, BMI, Physical Activity Level
--  Trained ML Model: Random Forest Classifier (with GridSearchCV tuning)
--  Feature importance & data visualization using Seaborn & Matplotlib
--  High accuracy with optimized metrics (precision, recall, F1-score)
--  Deployed via Streamlit Cloud with automated CI/CD
+- Interactive Streamlit user interface
+- Predicts obesity level using a trained Random Forest model
+- Easy to run locally
 
 ---
 
 ##  Tech Stack
 
-| Tool              | Purpose                                 |
-|-------------------|-----------------------------------------|
-| **Python**        | Programming language                    |
-| **Pandas**        | Data manipulation                       |
-| **Scikit-learn**  | Machine learning modeling               |
-| **Matplotlib / Seaborn** | Data visualization              |
-| **Streamlit**     | Web app development and deployment      |
-| **GitHub**        | Version control                         |
-| **CI/CD**         | Triggered via Streamlit GitHub sync     |
+- **Frontend:** Streamlit
+- **Backend:** Python, scikit-learn
+- **Model:** Random Forest (trained using scikit-learn)
 
 ---
 
-##  Project Structure
+##  How to Run the App Locally
 
-─ obesity.py # Streamlit app
+1. **Clone the Repository**
 
-─ final_obesity_model.pkl # Trained ML model
+---bash
 
-─ requirements.txt # Project dependencies
+  git clone https://github.com/<your-username>/obesity-predictor.git
+  cd obesity-predictor
 
-─ README.md # Project documentation
+2. **Install Requirements**
+   
+  pip install -r requirements.txt
 
- How to Run Locally
+4. **Run the App**
 
-1. Clone the repo:
-   git clone https://github.com/SuyashBurile/obesity-prediction-app.git
-   cd obesity-prediction-app
-2. Install dependencies:
-   pip install -r requirements.txt
-3. Run the app:
-   streamlit run app.py
-
+  streamlit run obesity.py
